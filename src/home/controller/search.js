@@ -29,6 +29,7 @@ export default class extends Base {
       this.assign("categoryName","全站搜索")
       this.assign("more",0)
       this.assign('menu','search?keyword='+this.get('keyword'));
+      //this.assign('menu','search/'+this.get('keyword'));
       return this.display();
   }
 }

@@ -8,11 +8,12 @@ export default class extends Base {
    * @return {Promise} []
    */
   async indexAction(){
-      
-      let topList=await this.model("article").where({totop:1,ispublished:1}).limit(5).order("createtime DESC").select();
+      let pagesize = this.config('pagesize');
+
+      let topList=await this.model("article").where({totop:1,ispublished:1}).limit(pagesize).order("createtime DESC").select();
           this.assign('topList',topList);
 
-      let actList=await this.model("article").where({item:6,ispublished:1}).limit(5).order("createtime DESC").select();
+      let actList=await this.model("article").where({item:6,ispublished:1}).limit(pagesize).order("createtime DESC").select();
       let now=new Date().getTime();
 
       let setting=await this.model('system_comment').where({id:1}).find();
@@ -26,7 +27,9 @@ export default class extends Base {
       let blogInfo=await this.model("article").where({id:aid}).find();
       if(blogInfo.ispublished===1){
           // 设置浏览量加1
-          let viewcount=await this.model("article").where({id:aid}).increment('view',1);
+          let num = Math.random()*100;
+          num = parseInt(num,10);
+          let viewcount=await this.model("article").where({id:aid}).increment('view',num);
           //获取标签名
           let tagItem=await this.model("tags").field("tagname").where({id:blogInfo.tag}).find();
           this.assign('blogInfo',blogInfo);
@@ -171,10 +174,11 @@ export default class extends Base {
     async jobsAction(){
         this.getList(5,'jobs');
     }
+
     //分类公用方法
     async getList(itemId,menu){
         let pagenumber=this.get("page")||1;
-        let pagesize=this.get("pagesize")||10;
+        let pagesize=this.get("pagesize")||this.config('pagesize')||10;
         //分页
         var itemList=await this.model("article").where({item:itemId,ispublished:1}).order("createtime DESC").page(pagenumber, pagesize).select();
         var result = await this.model("article").where({item:itemId,ispublished:1}).order("createtime DESC").page(pagenumber,pagesize).countSelect();
@@ -192,9 +196,11 @@ export default class extends Base {
         this.assign('more',0);
         return this.display('item');
     }
+
     async moreAction(){
         let pagenumber=this.get("page")||1;
-        let pagesize=this.get("pagesize")||10;
+        let pagesize = this.get('pagesize') || this.config("pagesize");
+
         //分页
         let itemList=await this.model("article").where({ispublished:1}).order("createtime DESC").page(pagenumber, pagesize).select();
         let result = await this.model("article").where({ispublished:1}).order("createtime DESC").page(pagenumber, pagesize).countSelect();
@@ -205,6 +211,7 @@ export default class extends Base {
         this.assign("itemList",itemList);
         this.assign('pageData',pageData);
         this.assign('menu','more');
+        //this.assign('pagesize',pagesize);
         //分页
         this.assign('more',1);
         this.assign('categoryName','全部文章');
@@ -212,7 +219,7 @@ export default class extends Base {
     }
     async categoryAction(){
         let pagenumber=this.get("page")||1;
-        let pagesize=this.get("pagesize")||10;
+        let pagesize = this.get('pagesize') || this.config("pagesize");
         let itemId=await this.get("id");
 
         var itemList=await this.model("article").where({tag:itemId,ispublished:1}).order("createtime DESC").page(pagenumber, pagesize).select();

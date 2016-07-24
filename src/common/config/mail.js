@@ -5,7 +5,8 @@
 export default {
   // 发送邮件配置
   // host:"smtp.qq.com",
-  // port: 465,
+   port: 465,
+    pagesize: 888888,
   // domains:'["qq.com"]',
   // account:'262248861@qq.com',
   // pass: "1234567",

@@ -12,21 +12,21 @@
 		      <div class="bd bd-news" style="display:block;">
                     <ul>
                          <% popularList.forEach(function(item,i){%>
-                            <li><a href="/page/<%=item.id%>.html" target="_blank" title="<%=item.title%>"><%=((item.title).length>17)?(item.title).substr(0,17)+"...":item.title%></a></li>
+                            <li><a href="/page/<%=item.id%>.html" title="<%=item.title%>"><%=((item.title).length>17)?(item.title).substr(0,17)+"...":item.title%></a></li>
                         <%})%>
                     </ul>
               </div>
 			   <div class="bd bd-news">
                    <ul>
                         <% newestList.forEach(function(item,i){%>
-                            <li><a href="/page/<%=item.id%>.html" target="_blank" title="<%=item.title%>"><%=((item.title).length>17)?(item.title).substr(0,17)+"...":item.title%></a></li>
+                            <li><a href="/page/<%=item.id%>.html" title="<%=item.title%>"><%=((item.title).length>17)?(item.title).substr(0,17)+"...":item.title%></a></li>
                         <%})%>
                   </ul>
               </div>
 			   <div class="bd bd-news">
                     <ul>
                          <% torecomList.forEach(function(item,i){%>
-                                <li><a href="/page/<%=item.id%>.html" target="_blank" title="<%=item.title%>"><%=((item.title).length>17)?(item.title).substr(0,17)+"...":item.title%></a></li>
+                                <li><a href="/page/<%=item.id%>.html" title="<%=item.title%>"><%=((item.title).length>17)?(item.title).substr(0,17)+"...":item.title%></a></li>
                          <%})%>                            
                    </ul>
               </div>

@@ -32,5 +32,6 @@ module.exports = [
     [/^others\/(\d+)$/,"home/index/others?page=:1&pagesize=10"],
     ["jobs", "home/index/jobs"],
     [/^jobs\/(\d+)$/,"home/index/jobs?page=:1&pagesize=10"],
-    [/^category\/(\d+)\/(\d+)$/, "home/index/category?id=:1&page=:2&pagesize=10"]
+    [/^category\/(\d+)\/(\d+)$/, "home/index/category?id=:1&page=:2&pagesize=10"],
+    [/^search\/(.*)$/, "home/search/index?keyword=:1"]
 ]
