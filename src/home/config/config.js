@@ -4,5 +4,5 @@
  */
 export default {
   //key: value
-    pagesize: 3,
+    pagesize: 2,
 };

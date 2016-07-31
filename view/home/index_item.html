@@ -22,7 +22,7 @@
 	   <div class="h2">
 	   <span>
 		   <% if(more!==1){%>
-		      <a href="#" target="_blank">更多>></a>
+		      <a href="more.html?itemId=<%=itemId%>">更多>></a>
 		   <%}%>
 	   </span>
         <ol class="breadcrumb">
@@ -52,7 +52,7 @@
 	       </div>
          <%})%>  
 	   </div>
-		<% if(pageData.count>10){ %>
+		<% if(pageData.count > config.pagesize){ %>
 			<%include inc/pagination.html%>
 		<%}%>
 	 </div>

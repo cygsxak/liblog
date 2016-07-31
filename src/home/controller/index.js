@@ -193,17 +193,22 @@ export default class extends Base {
 
         let item=await this.model("item").where({id:itemId}).find();
         this.assign('categoryName',item.itemname);
+        this.assign('itemId',itemId);
         this.assign('more',0);
         return this.display('item');
     }
 
     async moreAction(){
+
+        console.log(this.config("pagesize"));
+
         let pagenumber=this.get("page")||1;
         let pagesize = this.get('pagesize') || this.config("pagesize");
+        let itemId = this.get('itemId') || 0;
 
         //分页
-        let itemList=await this.model("article").where({ispublished:1}).order("createtime DESC").page(pagenumber, pagesize).select();
-        let result = await this.model("article").where({ispublished:1}).order("createtime DESC").page(pagenumber, pagesize).countSelect();
+        let itemList=await this.model("article").where({ispublished:1,item:itemId}).order("createtime DESC").page(pagenumber, pagesize).select();
+        let result = await this.model("article").where({ispublished:1,item:itemId}).order("createtime DESC").page(pagenumber, pagesize).countSelect();
         let Page=think.adapter("template", "page");
         let page = new Page(this.http);
         let pageData=page.pagination(result);
@@ -243,9 +248,15 @@ export default class extends Base {
 
     async linkssaveAction(){
         let mydata =await this.post();
+        console.log(mydata);
+        // return;
         let rs=await this.model('links').add(mydata);
-        if(rs) return this.success();
+        if(rs){
+            this.redirect('/links.html',301);
+        }
+        // if(rs) return this.success(mydata);
     }
+
     async guestsaveAction(){
         let mydata =await this.post();
         let rs=await this.model('guest').add(mydata);

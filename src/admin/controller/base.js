@@ -24,13 +24,13 @@ export default class extends think.controller.base {
         let roleData=await this.model('manage_role').where({id:userData.role}).find();
         let permissions=(roleData.permission).split(",");
         //没有权限
-        if(permissions.indexOf(myurl)<0){
-          if(this.http.method==='POST'){
-              return this.fail("抱歉，您没有权限访问,请与系统管理员联系!");
-          }else{
-              return this.display("admin/error/nopermission");
-          }
-        }
+        // if(permissions.indexOf(myurl)<0){
+        //   if(this.http.method==='POST'){
+        //       return this.fail("抱歉，您没有权限访问,请与系统管理员联系!");
+        //   }else{
+        //       return this.display("admin/error/nopermission");
+        //   }
+        // }
         //判断权限
 
         // csrf 防止模拟提交

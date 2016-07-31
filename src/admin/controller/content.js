@@ -195,17 +195,25 @@ export default class extends Base {
     }
 
     //上传图片接口
-    async uploadeditorAction(req, res) {
-        let file = think.extend({}, this.file('thumb_img'));
+    async uploadeditorAction() {
+        // let file = think.extend({}, this.file('thumb_img'));
         // let files = request.files['thumb_img'];
         // console.log(file);
+
+        let file = this.file('thumb_img');
+
         let filepath = file.path;
+
         let newpath = liFormatDate(new Date().toLocaleDateString());
-        let uploadPath = think.UPLOAD_PATH + '/pics/' + newpath;
+        let uploadPath = think.UPLOAD_PATH + '/pics/cyg/' + newpath;
         think.mkdir(uploadPath);
         let basename = path.basename(filepath);
         fs.renameSync(filepath, uploadPath + basename);
-        this.json("/static/upload/pics/" + newpath + basename);
+        this.json("/static/upload/pics/cyg/" + newpath + basename);
+    }
+
+    async encodeHTMLContent(str) {
+        return str.replace(/&quot;/g, '"').replace(/&lt;!--/g, "<!--").replace(/--&gt;/g, "-->");
     }
     //上传markdown文件及解析接口、内容分页
     async uploadfileAction() {
@@ -221,16 +229,16 @@ export default class extends Base {
             smartypants: false
         });
 
-        let file = think.extend({}, this.file('file'));
-        console.log(file.path);
+        // let file = think.extend({}, this.file('file'));
+
+        let file = this.file('file');
+
+        // console.log(file);
+
         var data = await getContent(file.path);
         var html = await marked(data);
 
-        function encodeHTMLContent(str) {
-            return str.replace(/&quot;/g, '"').replace(/&lt;!--/g, "<!--").replace(/--&gt;/g, "-->");
-        }
-
-        let newHtml = encodeHTMLContent(html), ainfo = {};
+        let newHtml = await this.encodeHTMLContent(html), ainfo = {};
         if (newHtml) {
             let ainfo_obj;
             if (newHtml.indexOf("<!--") > 0 && newHtml.indexOf("-->") > 0) {
