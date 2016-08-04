@@ -8,7 +8,7 @@ export default class extends think.controller.base {
         await this.getConfig();
         let limit = this.config('pagesize');
         //设置CSRF值
-        let csrf=await this.session("__CSRF__");
+        let csrf=await this.session("__CSRF__") || '';
         this.assign("csrf",csrf);
 
         //获取tags
